@@ -14,7 +14,7 @@
 #import "_FBKeyboardManager.h"
 
 // Minimum shake time required to present tweaks on device.
-static CFTimeInterval _FBTweakShakeWindowMinTimeInterval = 0.4;
+static CFTimeInterval _FBTweakShakeWindowMinTimeInterval = 0.6;
 
 @implementation FBTweakShakeWindow {
   BOOL _shaking;
