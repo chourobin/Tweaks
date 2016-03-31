@@ -22,4 +22,6 @@
  */
 @property (nonatomic) BOOL shakeEnabled;
 
+@property (nonatomic, assign, getter=isTouching) BOOL touching;
+
 @end

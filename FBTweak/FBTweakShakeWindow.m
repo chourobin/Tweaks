@@ -118,4 +118,45 @@ static void _FBTweakShakeWindowCommonInit(FBTweakShakeWindow *self)
   [super motionEnded:motion withEvent:event];
 }
 
+- (void)setTouching:(BOOL)touching
+{
+    if (_touching == touching) {
+        return;
+    }
+    
+    [self willChangeValueForKey:@"touching"];
+    _touching = touching;
+    [self didChangeValueForKey:@"touching"];
+}
+
++ (BOOL)automaticallyNotifiesObserversOfTouching
+{
+    return NO;
+}
+
++ (NSSet *)keyPathsForValuesAffectingIsTouching
+{
+    return [NSSet setWithObject:@"touching"];
+}
+
+- (void)sendEvent:(UIEvent *)event
+{
+    if (event.type == UIEventTypeTouches) {
+        UITouch *touch = [[event allTouches] anyObject];
+        switch (touch.phase) {
+            case UITouchPhaseBegan:
+            case UITouchPhaseMoved:
+            case UITouchPhaseStationary:
+                [self setTouching:YES];
+                break;
+            case UITouchPhaseEnded:
+            case UITouchPhaseCancelled:
+                [self setTouching:NO];
+                break;
+        }
+    }
+    
+    [super sendEvent:event];
+}
+
 @end
